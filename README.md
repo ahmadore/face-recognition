@@ -10,7 +10,7 @@ clone the repo with
 
     create an empty folder called 'ds'
 ###initialize the project with
-    ```python encode_caes.py -i ds -e encodings.pickle```
+    ```python encode_faces.py -i ds -e encodings.pickle```
  
 ###run: 
     ```python web/manage.py makemigrations```

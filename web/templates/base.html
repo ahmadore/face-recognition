@@ -1,0 +1,26 @@
+{% load static %}
+<html>
+    <head>
+        <title>
+            Face Recognition software
+        </title>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    </head>
+    <body class="main main-background main-margin">
+    <div >
+        <div>
+            <h1 class="title"> Finder </h1>
+            <h4 class="sub-title">Welcome to Missing Person's Reporting and Search platform</h4>
+            {% block content %} 
+                content here 
+            {% endblock %}
+        </div>
+    </div>
+        <!-- load jquery -->
+        <script
+			  src="https://code.jquery.com/jquery-2.2.4.min.js"
+			  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+              crossorigin="anonymous"></script>
+        {% block extra_js %} {% endblock %}
+    </body>
+</html>

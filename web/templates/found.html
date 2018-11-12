@@ -1,0 +1,11 @@
+{% for f in found %}
+<ol>
+    <li> {{ f.first_name }}</li>
+    <li> {{ f.last_name }}</li>
+    <li> {{ f.phone_number }}</li>
+    <li> {{ f.address }}</li>
+    <li>
+        <img src="{{ f.photo.url }}" class="img-thumbnail">
+    </li>
+</ol>
+{% endfor %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row col-md-10 text-left">
+        <h2>Fill out this form to report a missing case</h2>
+        <form method="POST" action="/api/report" enctype="multipart/form-data">
+            <div class="row container col-md-12">
+                <div class="col-md-6 form-group">
+                    <label>
+                        First Name:
+                    </label>
+                    <input type="text" class="form-control" name="first_name">
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <label>
+                        Last Name:
+                    </label>
+                    <input type="text" class="form-control" name="last_name">
+                </div>
+            </div>
+
+            <div class="row container col-md-12">
+                <div class="col-md-6 form-group">
+                    <label>
+                        Other Name:
+                    </label>
+                    <input type="text" class="form-control" name="other_name">
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <label>
+                        Phone Number:
+                    </label>
+                    <input type="text" class="form-control" name="phone_number" placeholder="if any">
+                </div>
+            </div>
+
+            <div class="row container col-md-12">
+                <div class="col-md-12 form-group">
+                    <label>
+                        Address
+                    </label>
+                    <textarea class="form-control" name="address">
+
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="row container col-md-12">
+                <div class="col-md-12">
+                    <input type="file" class="btn btn-primary pull-right" name="images" multiple id="images">
+
+                    <button type="submit" class="pull-right">
+                        Submit
+                    </button>
+                </div>
+            </div>
+            
+        </form>
+
+        <div class="text-left col-md-12" id="imagesDiv">
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+
+<script type="text/javascript">
+// trigger the file input field when the camera icon is clicked
+$(document).on('click', "#upload", function () {
+      $("input[type='file']").trigger('click');
+    });
+
+    // preview uploaded picture
+    $('input[type="file"]').on('change', function() {
+    //   $("img").attr('src', URL.createObjectURL($(this)[0].files[0]));
+    let images = $(this)[0].files;
+    let i;
+    for(i=0; i < images.length; i++) {
+        $("#imagesDiv").append('<img class="img-thumbnail" src='
+            + URL.createObjectURL(images[i]) + ' ' + 'alt="Thumbnail image">');
+    }
+});
+</script>
+
+{% endblock %}

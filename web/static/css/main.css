@@ -1,0 +1,77 @@
+.col-1{
+    width: 16.67%;
+}
+
+.col-2{
+    width: 33.34%;
+}
+
+.col-3{
+    width: 50%;
+}
+
+.col-4{
+    width: 66.64%;
+}
+
+.col-5{
+    width: 83.3%;
+}
+
+.col-6{
+    width: 100%;
+}
+
+.main-margin{
+    margin: 40px 20px;
+}
+
+.main-background{
+    background-color: #8dcee2e7;
+}
+
+.sub-background{
+    background-color: #faf5f5
+}
+
+.btn{
+    background-color: #3486bde7
+}
+
+.title{
+    font-size: 3em;
+}
+
+.sub-title{
+    font-size: 1.8em;
+}
+
+.main{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+}
+
+.img-thumbnail{
+    width: 250px;
+    height: 250px;
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid #0a022ee7;
+    border-radius: 3px;
+}
+
+.display-inline{
+    display: inline-flex;
+}
+
+.display-block{
+    display: block;
+}
+
+.text-left{
+    align-content: left;
+}
+
+.list{
+    text-align: left;
+}

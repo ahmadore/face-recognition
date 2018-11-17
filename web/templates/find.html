@@ -1,1 +1,102 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="siimple-grid">
+    <div class="siimple-grid-row">
+        <div class="siimple-grid-col siimple-grid-col--7 siimple-grid-col--sm-hide">
+            <div class="siimple-grid">
+                <div class="siimple-grid-row">
+                    <div class="siimple-grid-col siimple-grid-col--12 siimple-grid-col--sm-hide">
+                        <div class="siimple-h5">Search by Image</div>
+                        <div class="siimple-rule"></div>
+                        <small>Note: we only support search with only a single  face at the moment</small>
+                        <form action="/api/find" enctype="multipart/form-data" method="POST">
+                        <input type="file" class="siimple-btn siimple-btn--primary" name="image">
+        
+                        <button type="button" class="siimple-btn siimple-btn--success" id="submit">
+                            Submit
+                        </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="siimple-grid-col siimple-grid-col--5 siimple-grid-col--sm-12">
+            <div class="siimple-grid">
+                <div class="siimple-grid-row">
+                    <div class="siimple-grid-col siimple-grid-col--12 siimple-grid-col--sm-hide">
+                        <div class="siimple-h5">Search Result</div>
+                        <div class="siimple-rule"></div>
+                        <div id="results">
+                            <div class="result-card">
+                                <div class="result-title">
+                                    
+                                </div>
+                                <div class="result-body">
+                                    <div class="result-image">
+                                        
+                                    </div>
+                                    <div class="result-detail">
+                                        <div class="result-mobile">
+                                            
+                                        </div>
+                                        <div class="result-address">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$('#submit').click( function() {
+    resetFund();
+    var data = new FormData(jQuery('form')[0]);
+    jQuery.each(jQuery('input[type="file"]')[0].files, function(i, file) {
+        data.append('image', file);
+    });
+    $.ajax({
+        url: '/api/find',
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        method: 'POST',
+        type: 'POST', // For jQuery < 1.9
+        success: function(data){
+            if(data.found === 'true'){
+                setFound(data.data);
+            }
+            else{
+                alert("No match was found");
+            }
+        },
+        error: function(e){
+            alert("an error occured during the search");
+        }
+    });
+});
+function resetFund(){
+    $('.result-title').text('');
+    $('.result-image').html('');
+    $('.result-mobile').text('');
+    $('.result-address').text('');
+};
+
+function setFound(data){
+    $('.result-title').text(data.first_name + " " + data.last_name + " " + data.other_name);
+    $('.result-image').html('<img src=' + data.photo + ' alt="">');
+    $('.result-mobile').text(data.phone_number);
+    $('.result-address').text(data.address);
+}
+</script>
+{% endblock %}

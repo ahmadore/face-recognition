@@ -1,0 +1,39 @@
+<form method="POST" action="/api/report" enctype="multipart/form-data">
+            <div class="label"><label>
+                First Name:
+            </label></div>
+            <input type="text" class="form-control" name="first_name" placeholder="Moses">
+        
+            <div class="label"><label>
+                Last Name:
+            </label></div>
+            <input type="text" class="form-control" name="last_name" placeholder="Idris">
+            <div class="label"><label>
+                Other Name:
+            </label></div>
+            <input type="text" class="form-control" name="other_name" placeholder="Optional">
+            <div class="label">
+                Phone Number:
+            </label></div>
+            <input type="text" class="form-control" name="phone_number" placeholder="+23470661......">
+            <div class="label"><label>
+                Address
+            </label></div>
+            <textarea name="address" rows="3" class="form-control">
+
+            </textarea>
+    
+    <div class="siimple-grid">
+        <div class="siimple-grid-row">
+            <div class="siimple-grid-col siimple-grid-col--12 siimple-grid-col--sm-hide">
+                <small>Upload images, hold down control to upload Multiple Images, minimum of 4 images are required</small>
+                <input type="file" class="siimple-btn siimple-btn--primary" name="images" multiple id="images">
+
+                <button type="button" class="siimple-btn siimple-btn--success" id="submit">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </div>
+    
+</form>

@@ -2,40 +2,35 @@
 {% block content %}
 <div class="sub-background">
         <div class="col-6 display-inline">
-
-          <div class="col-3">
-            <a href="/report" class="btn">Report</a>
-            <h3>What is this about?</h3>
-            <hr>
-            <p class="text-left">
-              This application is a platform for report missing person's case, so that others can 
-              search for found persons
-            </p>
-            <h4>Why Bother?</h4>
-            <ul class="list">
-              <li>A lot of the time when missing person's are found, communication is difficult, 
-                  therefore making it inposible to locate/contact their relatives.
-              </li>
-              <li>
-                  In worst cases, they are found dead in cases of accident and other tragedies.
-              </li>
-              <li>
-                  In situations like this, if the person has been reported missing prior, the reporters 
-                  contact details are obtained, thereby making it easy to locate/contact them.
-              </li>
-            </ul>
+          <div class="siimple-grid">
+              <div class="siimple-grid-row">
+                  <div class="siimple-grid-col siimple-grid-col--7 siimple-grid-col--sm-12">
+                    <div class="siimple-card" style="max-width:100%;">
+                        <div class="siimple-card-body">
+                            <div class="siimple-card-title">What is this about?</div>
+                            This application is a platform for report missing person's case, 
+                            so that others can search for found persons.
+                            <div class="siimple-card-title">Why Bother?</div>
+                            <ul class="list">
+                              <li>A lot of the time when missing person's are found, communication is difficult, 
+                                  therefore making it imposible to locate/contact their relatives.
+                              </li>
+                              <li>
+                                  In worst cases, they are found dead in cases of accident and other tragedies.
+                              </li>
+                              <li>
+                                  In situations like this, if the person has been reported missing prior, the reporters 
+                                  contact details are obtained, thereby making it easy to locate/contact them.
+                              </li>
+                            </ul>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="siimple-grid-col siimple-grid-col--5 siimple-grid-col--sm-12">
+                      Display images here....
+                  </div>
+              </div>
           </div>
-          <div style="border-left:1px solid #000;height:300px"></div>
-          <div class="col-3">
-            <form method="POST" enctype="multipart/form-data" action="/api/find">
-            <div class="form-group">
-              <input type="file" name="image" class="btn">
-              <button class="btn">Search</button>
-            </div>
-            </form>
-          </div>
-
-        </div>
-        </div>
+          
       </div>
 {% endblock %}

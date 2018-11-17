@@ -5,12 +5,12 @@
             Face Recognition software
         </title>
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.1.1/dist/siimple.min.css">
     </head>
-    <body class="main main-background main-margin">
+    <body>
     <div >
         <div>
-            <h1 class="title"> Finder </h1>
-            <h4 class="sub-title">Welcome to Missing Person's Reporting and Search platform</h4>
+            {% include 'navigation.html' %}
             {% block content %} 
                 content here 
             {% endblock %}

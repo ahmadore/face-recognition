@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+import json
 from django.views.decorators import csrf
 from imutils import paths
 import face_recognition
@@ -10,6 +11,7 @@ import os
 import numpy as np
 
 from .models import Report
+from .serializers import ReportSerializer
 
 # path to encoding file
 encodings_path = "../encodings.pickle"
@@ -72,8 +74,9 @@ def report_api(request):
             "names": names
         }
         serialize_data(data)
-
-    return HttpResponse("Your report will be filed and be contacted when person is found")
+        return HttpResponse(json.dumps({'status': 'success'}), content_type="application/json")
+    else:
+        return HttpResponse(json.dumps({'status': 'failed'}), content_type="application/json")
 
 @csrf.csrf_exempt
 def find_api(request):
@@ -99,9 +102,13 @@ def find_api(request):
         
         # update lists of names
         names.append(name)
-    print(names)
     try:
         found = Report.objects.filter(pk__in=names)
+        sFound = ReportSerializer(found, many=True).data
+        response = {
+            'found': 'true',
+            'data' : sFound[0]
+        }
+        return HttpResponse(json.dumps(response), content_type="application/json")
     except:
-        return None
-    return render(request, 'found.html', {'found': found})
+        return HttpResponse(json.dumps({'found': 'false'}), content_type="application/json")

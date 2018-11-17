@@ -1,65 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="row col-md-10 text-left">
-        <h2>Fill out this form to report a missing case</h2>
-        <form method="POST" action="/api/report" enctype="multipart/form-data">
-            <div class="row container col-md-12">
-                <div class="col-md-6 form-group">
-                    <label>
-                        First Name:
-                    </label>
-                    <input type="text" class="form-control" name="first_name">
-                </div>
-
-                <div class="col-md-6 form-group">
-                    <label>
-                        Last Name:
-                    </label>
-                    <input type="text" class="form-control" name="last_name">
+    <div class="siimple-grid">
+        <div class="siimple-grid-row">
+            <div class="siimple-grid-col siimple-grid-col--7 siimple-grid-col--sm-12">
+                <div class="siimple-card" style="max-width:100%;">
+                    <div class="siimple-card-body">
+                        <div class="siimple-card-title" style="text-align: center;">Report Case</div>
+                        <div class="siimple-rule"></div>
+                        <div class="siimple-h6">Fill out this form to report a missing case</div>
+                        {% include 'report-form.html' %}
+                    </div>
                 </div>
             </div>
+            <div class="siimple-grid-col siimple-grid-col--5 siimple-grid-col--sm-12">
+                <div class="siimple-card" style="max-width:100%;">
+                    <div class="siimple-card-body">
+                        <div class="siimple-card-subtitle" style="text-align: center;">Preview Uplaods</div>
+                        <div class="siimple-rule"></div>
+                        <div class="image-preview" id="imagesDiv">
 
-            <div class="row container col-md-12">
-                <div class="col-md-6 form-group">
-                    <label>
-                        Other Name:
-                    </label>
-                    <input type="text" class="form-control" name="other_name">
-                </div>
-
-                <div class="col-md-6 form-group">
-                    <label>
-                        Phone Number:
-                    </label>
-                    <input type="text" class="form-control" name="phone_number" placeholder="if any">
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="row container col-md-12">
-                <div class="col-md-12 form-group">
-                    <label>
-                        Address
-                    </label>
-                    <textarea class="form-control" name="address">
-
-                    </textarea>
-                </div>
-            </div>
-
-            <div class="row container col-md-12">
-                <div class="col-md-12">
-                    <input type="file" class="btn btn-primary pull-right" name="images" multiple id="images">
-
-                    <button type="submit" class="pull-right">
-                        Submit
-                    </button>
-                </div>
-            </div>
-            
-        </form>
-
-        <div class="text-left col-md-12" id="imagesDiv">
+        </div>
+    </div>
+    <div class="col-5 section">
+        
+        <div class="col-6 text-left" id="imagesDiv">
 
         </div>
     </div>
@@ -82,6 +51,30 @@ $(document).on('click', "#upload", function () {
         $("#imagesDiv").append('<img class="img-thumbnail" src='
             + URL.createObjectURL(images[i]) + ' ' + 'alt="Thumbnail image">');
     }
+});
+
+$('#submit').click( function() {
+    var data = new FormData(jQuery('form')[0]);
+    jQuery.each(jQuery('input[type="file"]')[0].files, function(i, file) {
+        data.append('images', file);
+    });
+    $.ajax({
+        url: '/api/report',
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        method: 'POST',
+        type: 'POST', // For jQuery < 1.9
+        success: function(data){
+            alert("Case Was reported Successfully");
+            $('form')[0].reset();
+            $("#imagesDiv").html('');
+        },
+        error: function(e){
+            alert("could Not Report Case, check your input and try again");
+        }
+    });
 });
 </script>
 

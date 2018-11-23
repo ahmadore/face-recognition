@@ -124,19 +124,17 @@ def find_api(request):
 
 def longTask(report, imgs):
     count = 1
-    encoding = []
-    name = []
     for image in imgs:
-        print(count)
+        print("%s images frocessed" %count)
         encoded = encode_image(image)
         for code in encoded:
-            encoding.append(code)
-            name.append(report.id)
+            encodings.append(code)
+            names.append(report.id)
         count += 1
 
     data = {
-        "encodings": encodings.extend(encoding),
-        "names": names.extend(name)
+        "encodings": encodings,
+        "names": names
     }
     serialize_data(data)
     print("completed report")

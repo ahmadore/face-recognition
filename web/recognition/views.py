@@ -9,9 +9,11 @@ import pickle
 import cv2
 import os
 import numpy as np
-
+import threading
+import time
 from .models import Report
 from .serializers import ReportSerializer
+import copy
 
 # path to encoding file
 encodings_path = "../encodings.pickle"
@@ -22,8 +24,8 @@ data = pickle.loads(open(encodings_path, "rb").read())
 encodings = data["encodings"]
 names = data["names"]
 
-def encode_image(image):
-    img_raw = image.read()
+def encode_image(img):
+    img_raw = img.read()
     np_img = np.fromstring(img_raw, np.uint8)
     img = cv2.imdecode(np_img, cv2.IMREAD_COLOR)
     rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -64,16 +66,23 @@ def report_api(request):
         )
         report.save()
         # encode images
-        for image in images[1:]:
-            encoded = encode_image(image)
-            for code in encoded:
-                encodings.append(code)
-                names.append(report.id)
-        data = {
-            "encodings": encodings,
-            "names": names
-        }
-        serialize_data(data)
+        # count = 1
+        # for image in copy.deepcopy(images[1:]):
+        #     print(count)
+        #     encoded = encode_image(image)
+        #     for code in encoded:
+        #         encodings.append(code)
+        #         names.append(report.id)
+        #     count += 1
+        # data = {
+        #     "encodings": encodings,
+        #     "names": names
+        # }
+        # serialize_data(data)
+        # make all of this asynchronous
+        t = threading.Thread(target=longTask, args=[report, copy.deepcopy(images[1:])])
+        t.setDaemon(True)
+        t.start()
         return HttpResponse(json.dumps({'status': 'success'}), content_type="application/json")
     else:
         return HttpResponse(json.dumps({'status': 'failed'}), content_type="application/json")
@@ -96,7 +105,6 @@ def find_api(request):
             for i in matched_idx:
                 name = data["names"][i]
                 counts[name] = counts.get(name, 0) + 1
-            
             # determine the name with the maximum vote
             name = max(counts, key=counts.get)
         
@@ -112,3 +120,23 @@ def find_api(request):
         return HttpResponse(json.dumps(response), content_type="application/json")
     except:
         return HttpResponse(json.dumps({'found': 'false'}), content_type="application/json")
+
+
+def longTask(report, imgs):
+    count = 1
+    encoding = []
+    name = []
+    for image in imgs:
+        print(count)
+        encoded = encode_image(image)
+        for code in encoded:
+            encoding.append(code)
+            name.append(report.id)
+        count += 1
+
+    data = {
+        "encodings": encodings.extend(encoding),
+        "names": names.extend(name)
+    }
+    serialize_data(data)
+    print("completed report")

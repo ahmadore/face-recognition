@@ -26,12 +26,6 @@
             </div>
         </div>
     </div>
-    <div class="col-5 section">
-        
-        <div class="col-6 text-left" id="imagesDiv">
-
-        </div>
-    </div>
 {% endblock %}
 
 {% block extra_js %}
@@ -54,10 +48,8 @@ $(document).on('click', "#upload", function () {
 });
 
 $('#submit').click( function() {
-    var data = new FormData(jQuery('form')[0]);
-    jQuery.each(jQuery('input[type="file"]')[0].files, function(i, file) {
-        data.append('images', file);
-    });
+    const data = new FormData(jQuery('form')[0]);
+    // console.log(data.getAll('images').length);
     $.ajax({
         url: '/api/report',
         data: data,
